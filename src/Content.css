@@ -9,3 +9,20 @@
   font-size: 24px;
   font-weight: 100;
 }
+.Content-List-li{
+  padding-left: 60px;
+  position: relative;
+  font-size: 24px;
+  border-bottom: 1px solid #ededed;
+  font-weight: 100;
+  display: list-item;
+}
+
+.Content-List {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mainContent{
+  background: #ffffff; ;
+}
