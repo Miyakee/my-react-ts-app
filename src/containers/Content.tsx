@@ -36,7 +36,7 @@ export class Content extends React.Component<
                     {this.state.todoList.
                     filter((value:any) => this.getCurrentStatus(value.status))
                         .map((value:any,index:string) => (
-                            <li className="Content-List-li" key={index}><input type="button" value="completed" onClick={this.changeToCompleted.bind(index)}/><span>{value.thing}</span></li>
+                            <li className="Content-List-li" key={index}><input type="button" value="completed" key={index} onClick={this.changeToCompleted.bind(this,index)}/><span>{value.thing}</span><input type="button" value="deleted" onClick={this.deletedTheTask.bind(this,index)}/></li>
                     ))}
                 </ul>
                     <div ><span>{thingsLength+"item list"}</span>
@@ -53,7 +53,7 @@ export class Content extends React.Component<
 
     private haldleKeyDown = (key: any)=>{
         if(key.keyCode === 13 &&this.state.things!=="" ){
-           this.state.todoList.push({thing:this.state.things,status:0})
+           this.state.todoList.push({thing:this.state.things,status:1})
             this.setState({
                 todoList:this.state.todoList
             })
@@ -84,13 +84,25 @@ export class Content extends React.Component<
     }
 
     private  getCurrentStatus=(status:number)=>{
+        if(this.state.currentStatus === 0){
+            return true
+        }
        return  status === this.state.currentStatus
     }
 
-    // todo update
-    private  changeToCompleted=(index:string)=>{
 
-        return  status === this.state.currentStatus
+    private  changeToCompleted=(index:string,event:any)=>{
+       this.state.todoList[index].status=2
+        this.setState({
+            todoList: this.state.todoList
+        })
+    }
+
+    private deletedTheTask = (index:string,event:any)=>{
+        this.state.todoList.splice(index, 1)
+        this.setState({
+            todoList: this.state.todoList
+        })
     }
 
 
