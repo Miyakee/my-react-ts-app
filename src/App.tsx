@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Content} from "./containers/Content";
-import {Footer} from "./containers/Footer";
-import {Title} from "./containers/Title";
+import {Content} from "./page/content/containers/Content";
+import {Footer} from "./page/footer/containers/Footer";
+import {Title} from "./page/header/containers/Title";
 import './TodoMvc.css';
 
 

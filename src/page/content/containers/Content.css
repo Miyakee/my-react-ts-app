@@ -15,7 +15,7 @@
   font-size: 24px;
   border-bottom: 1px solid #ededed;
   font-weight: 100;
-  display: list-item;
+  display: flex;
 }
 
 .Content-List {
@@ -24,5 +24,24 @@
   list-style: none;
 }
 .mainContent{
-  background: #ffffff; ;
+  background: #ffffff;
+  width: 550px;
+}
+
+.completeBtn{
+}
+
+.deletedBtn{
+  margin-right: 10px;
+}
+.ListContent {
+  width: 100%
+}
+.liSpan{
+  word-wrap: break-word;
+}
+
+.ListBottom{
+  display: flex;
+  justify-content:  space-between
 }
