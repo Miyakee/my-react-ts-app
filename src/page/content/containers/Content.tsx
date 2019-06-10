@@ -1,10 +1,15 @@
 import * as React from "react";
 import './Content.css';
+import {TodoList} from "./TodoList";
 
 export interface IContentProps {
     history?: any;
+    currentStatus?:number,
+    task?:string,
+    todoList?:[],
 
 }
+
 
 export class Content extends React.Component<
     IContentProps,any >{
@@ -30,23 +35,10 @@ export class Content extends React.Component<
                        data-reactid=".0.0.4"
                        onChange={event => this.handleInputChange(event.target.value)}
                        onKeyDown={this.haldleKeyDown} />
-                <ul className="Content-List">
-                    {this.state.todoList.
-                    filter((value:any) => this.getCurrentStatus(value.status))
-                        .map((value:any,index:string) => (
-                            <li className="Content-List-li" key={index}>
-                                <div className="completeBtn">
-                                    <input type="checkBox"   value="completed"  checked={value.checked} key={index} onClick={this.changeToCompleted.bind(this,index)}/>
-                                </div>
-                                <div className="ListContent">
-                                <span className="liSpan" >{value.taskContent}</span>
-                                </div>
-                                <div className="deletedBtn">
-                                    <input type="button" value="deleted" onClick={this.deletedTheTask.bind(this,index)}/>
-                                </div>
-                                </li>
-                    ))}
-                </ul>
+                       <TodoList todoList={this.state.todoList}
+                                 currentStatus={this.state.currentStatus}
+                       updateList={(todoList:[])=>updateList(todoList)}/>
+
                     {tasksLength>0?<div className="ListBottom">
                         <div><span>{tasksLength+"item list"}</span></div>
                         <div><input type="button" value="all" onClick={this.handleAllTask}/>
@@ -59,7 +51,16 @@ export class Content extends React.Component<
                 </div>
             </div>
         )
+
+    const updateList=(newList:[])=>{
+            this.setState(
+                {
+                    todoList:newList
+                }
+            )
+        }
     }
+
 
 
     private haldleKeyDown = (key: any)=>{
@@ -95,37 +96,7 @@ export class Content extends React.Component<
         })
     }
 
-    private  getCurrentStatus=(status:number)=>{
-        if(this.state.currentStatus === 0){
-            return true
-        }
-       return  status === this.state.currentStatus
-    }
 
-
-    private  changeToCompleted=(index:string,event:any)=>{
-        if(this.state.todoList[index].checked){
-            this.state.todoList[index].status=1
-            this.state.todoList[index].checked=false
-            this.setState({
-                todoList: this.state.todoList,
-            })
-        }else{
-            this.state.todoList[index].status=2
-            this.state.todoList[index].checked=true
-            this.setState({
-                todoList: this.state.todoList,
-            })
-        }
-
-    }
-
-    private deletedTheTask = (index:string,event:any)=>{
-        this.state.todoList.splice(index, 1)
-        this.setState({
-            todoList: this.state.todoList
-        })
-    }
 
     private deletedAllCompletedTask = ()=>{
         this.state.todoList.filter((each:any)=>(each.status === 2)).map((value:any,index:string)=>(
