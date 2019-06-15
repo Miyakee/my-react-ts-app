@@ -8,9 +8,6 @@ export class TodoList extends React.Component<
 
     constructor(props: IContentProps) {
         super(props);
-        this.state = {
-            todoList:[],
-        };
     }
 
 
@@ -60,28 +57,19 @@ export class TodoList extends React.Component<
 
 
     private  changeToCompleted=(index:string,event:any)=>{
-        this.setState({
-            todoList:this.props.todoList
-        })
-        if(this.state.todoList[index].checked){
-            this.state.todoList[index].status=1
-            this.state.todoList[index].checked=false
+        if(this.props.todoList[index].checked){
+            this.props.todoList[index].status=1
+            this.props.todoList[index].checked=false
         }else{
-            this.state.todoList[index].status=2
-            this.state.todoList[index].checked=true
+            this.props.todoList[index].status=2
+            this.props.todoList[index].checked=true
         }
 
-        this.props.updateList(this.state.todoList)
-
+        this.props.updateList(this.props.todoList)
     }
 
     private deletedTheTask = (index:string,event:any)=>{
-        this.setState({
-            todoList:this.props.todoList
-        })
-        this.state.todoList.splice(index, 1)
-        this.props.updaeList({
-            todoList: this.state.todoList
-        })
+        this.props.todoList.splice(index, 1)
+        this.props.updateList(this.props.todoList)
     }
 }
