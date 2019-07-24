@@ -1,12 +1,21 @@
 import * as React from "react";
-import {IContentProps} from "./Content";
+import {ITask} from "../reducer";
+
+export interface ITodoList {
+    history?: any;
+    todoList: ITask[],
+    currentStatus?: number,
+    deleteTask: (taskId: number)=>void,
+    changeToCompleted: (taskId: number) =>void
+    changeTaskStatus: (taskId: number,status: number)=>void
 
 
+}
 
 export class TodoList extends React.Component<
-    any,any > {
+    ITodoList,any > {
 
-    constructor(props: IContentProps) {
+    constructor(props: ITodoList) {
         super(props);
     }
 
@@ -17,7 +26,7 @@ export class TodoList extends React.Component<
             <ul className = "Content-List" >
             {
                 this.props.todoList.filter((value: any) => this.getCurrentStatus(value.status))
-                    .map((value: any, index: string) => (
+                    .map((value: ITask, index: number) => (
                         <li className = "Content-List-li"
                             key = {index} >
                             <div className = "completeBtn" >
@@ -56,20 +65,12 @@ export class TodoList extends React.Component<
     }
 
 
-    private  changeToCompleted=(index:string,event:any)=>{
-        if(this.props.todoList[index].checked){
-            this.props.todoList[index].status=1
-            this.props.todoList[index].checked=false
-        }else{
-            this.props.todoList[index].status=2
-            this.props.todoList[index].checked=true
-        }
-
-        this.props.updateList(this.props.todoList)
+    private  changeToCompleted=(index:number,event:any)=>{
+        this.props.changeToCompleted(index);
+        this.props.changeTaskStatus(index,2)
     }
 
-    private deletedTheTask = (index:string,event:any)=>{
-        this.props.todoList.splice(index, 1)
-        this.props.updateList(this.props.todoList)
+    private deletedTheTask = (index:number,event:any)=>{
+      this.props.deleteTask(index);
     }
 }

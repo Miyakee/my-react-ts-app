@@ -1,9 +1,17 @@
 import * as React from "react";
-import {IContentProps} from "./Content";
-
+import {ITask} from "../reducer";
+export interface IBottomBarProps {
+    todoList: ITask[],
+    currentStatus: number,
+    allTasksLength: number,
+    updateCurrentStatus: (status: number)=>void,
+    unCompletedTasksLength: number,
+    deleteTask: (taskId: number)=>void,
+    deleteAllCompletedTask: ()=>void,
+}
 export class BottomBar extends React.Component<
-    any,any > {
-    constructor(props: IContentProps) {
+    IBottomBarProps,any > {
+    constructor(props: IBottomBarProps) {
         super(props);
     }
 
@@ -17,7 +25,7 @@ export class BottomBar extends React.Component<
                     <input type="button" value="active" onClick={this.handleActiveTask}/>
                     <input type="button" value="completed" onClick={this.handleCompletedTask}/>
                 </div>
-                <div><input type="button" value="clear completed" onClick={this.deletedAllCompletedTask}/></div>
+                <div><input type="button" value="clear completed" onClick={this.props.deleteAllCompletedTask}/></div>
             </div>
             )
         }else {
@@ -38,13 +46,4 @@ export class BottomBar extends React.Component<
         this.props.updateCurrentStatus(2)
     }
 
-    private deletedAllCompletedTask = ()=>{
-        this.state.todoList.filter((each:any)=>(each.status === 2)).map((value:any,index:string)=>(
-                this.setState({
-                        todoList: this.state.todoList.splice(index, 1)
-                    }
-                )
-            )
-        )
-    }
 }
